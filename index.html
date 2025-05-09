@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+        
+        .emoji-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .emoji {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.7;
+            animation: floatUp linear infinite;
+        }
+        
+        @keyframes floatUp {
+            to {
+                transform: translateY(-100vh);
+            }
+        }
+        
+        .profile-card {
+            width: 400px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .contact-btn {
+            background: rgba(56, 139, 253, 0.4);
+        }
+        
+        .contact-btn:hover {
+            background: rgba(56, 139, 253, 0.6);
+        }
+        
+        .telegram-btn {
+            background: rgba(0, 136, 204, 0.4);
+        }
+        
+        .telegram-btn:hover {
+            background: rgba(0, 136, 204, 0.6);
+        }
+        
+        .telegram-icon {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="emoji-container" id="emojiContainer"><div class="emoji" style="left: 0.401047vw; bottom: -30px; animation-duration: 13.8797s; font-size: 44.0877px; opacity: 0.586251;">👾</div><div class="emoji" style="left: 17.1007vw; bottom: -30px; animation-duration: 12.0649s; font-size: 34.0743px; opacity: 0.884771;">😜</div><div class="emoji" style="left: 48.3472vw; bottom: -30px; animation-duration: 14.7326s; font-size: 17.9628px; opacity: 0.721486;">🔥</div><div class="emoji" style="left: 32.3685vw; bottom: -30px; animation-duration: 13.0549s; font-size: 27.5275px; opacity: 0.551222;">😂</div><div class="emoji" style="left: 51.5025vw; bottom: -30px; animation-duration: 10.0078s; font-size: 29.4648px; opacity: 0.666097;">😎</div><div class="emoji" style="left: 23.6422vw; bottom: -30px; animation-duration: 8.89072s; font-size: 20.742px; opacity: 0.537389;">💩</div><div class="emoji" style="left: 91.6536vw; bottom: -30px; animation-duration: 8.67051s; font-size: 35.8979px; opacity: 0.632788;">🤖</div><div class="emoji" style="left: 38.1138vw; bottom: -30px; animation-duration: 9.51694s; font-size: 32.6166px; opacity: 0.659883;">👻</div><div class="emoji" style="left: 19.1307vw; bottom: -30px; animation-duration: 8.57364s; font-size: 16.8785px; opacity: 0.894634;">👻</div><div class="emoji" style="left: 10.0088vw; bottom: -30px; animation-duration: 7.77795s; font-size: 37.9043px; opacity: 0.686264;">😂</div><div class="emoji" style="left: 44.7629vw; bottom: -30px; animation-duration: 14.7446s; font-size: 32.7865px; opacity: 0.795998;">😀</div><div class="emoji" style="left: 87.2933vw; bottom: -30px; animation-duration: 7.85368s; font-size: 22.5155px; opacity: 0.930566;">🤯</div><div class="emoji" style="left: 71.7579vw; bottom: -30px; animation-duration: 12.8189s; font-size: 30.5269px; opacity: 0.809408;">😂</div><div class="emoji" style="left: 50.3704vw; bottom: -30px; animation-duration: 13.4498s; font-size: 26.9915px; opacity: 0.573031;">👾</div><div class="emoji" style="left: 2.29391vw; bottom: -30px; animation-duration: 14.778s; font-size: 45.7043px; opacity: 0.743599;">⚡</div><div class="emoji" style="left: 75.9109vw; bottom: -30px; animation-duration: 11.0536s; font-size: 39.7496px; opacity: 0.860325;">🔥</div><div class="emoji" style="left: 92.3055vw; bottom: -30px; animation-duration: 14.903s; font-size: 40.67px; opacity: 0.820476;">🍕</div><div class="emoji" style="left: 82.912vw; bottom: -30px; animation-duration: 6.50323s; font-size: 26.1345px; opacity: 0.501714;">🍕</div><div class="emoji" style="left: 96.2079vw; bottom: -30px; animation-duration: 6.67673s; font-size: 44.311px; opacity: 0.606731;">😍</div><div class="emoji" style="left: 91.523vw; bottom: -30px; animation-duration: 12.6813s; font-size: 20.267px; opacity: 0.798694;">🤩</div><div class="emoji" style="left: 78.9315vw; bottom: -30px; animation-duration: 8.44004s; font-size: 20.8401px; opacity: 0.901267;">🥳</div><div class="emoji" style="left: 46.4231vw; bottom: -30px; animation-duration: 5.17847s; font-size: 21.7329px; opacity: 0.666051;">🤔</div><div class="emoji" style="left: 68.312vw; bottom: -30px; animation-duration: 8.1382s; font-size: 20.16px; opacity: 0.717463;">🐶</div><div class="emoji" style="left: 30.3325vw; bottom: -30px; animation-duration: 5.38146s; font-size: 40.552px; opacity: 0.860035;">🙄</div><div class="emoji" style="left: 21.4452vw; bottom: -30px; animation-duration: 6.68437s; font-size: 19.7301px; opacity: 0.752336;">👾</div><div class="emoji" style="left: 69.4212vw; bottom: -30px; animation-duration: 12.2306s; font-size: 22.4563px; opacity: 0.51421;">🤩</div><div class="emoji" style="left: 88.1077vw; bottom: -30px; animation-duration: 8.88888s; font-size: 31.1895px; opacity: 0.879502;">🦄</div><div class="emoji" style="left: 5.77928vw; bottom: -30px; animation-duration: 10.4671s; font-size: 27.449px; opacity: 0.995657;">⚡</div><div class="emoji" style="left: 63.8301vw; bottom: -30px; animation-duration: 5.40356s; font-size: 21.947px; opacity: 0.963805;">🤔</div><div class="emoji" style="left: 74.3222vw; bottom: -30px; animation-duration: 6.35478s; font-size: 33.0696px; opacity: 0.918086;">😍</div><div class="emoji" style="left: 16.5299vw; bottom: -30px; animation-duration: 14.008s; font-size: 31.3866px; opacity: 0.821222;">⚡</div><div class="emoji" style="left: 96.363vw; bottom: -30px; animation-duration: 14.8408s; font-size: 38.8811px; opacity: 0.754932;">😍</div></div>
+    
+    <div class="profile-card">
+        <img src="./index_files/avatar.png" alt="Avatar" class="avatar">
+        <h1>Tamdas</h1>
+        <p class="description">Привет я ютубер у меня есть сервер))) это сайт</p>
+        <div class="buttons">
+            <button class="btn contact-btn">Связаться</button>
+            <button class="btn telegram-btn">
+                <svg class="telegram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"></path>
+                </svg>
+                Telegram bio
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const emojis = ['😀', '😂', '🤩', '😍', '🤔', '🙄', '😎', '🥳', '😜', '🤯', '👻', '💩', '🤖', '👾', '🐶', '🦄', '🌈', '🔥', '🍕', '⚡'];
+        const container = document.getElementById('emojiContainer');
+        
+        function createEmoji() {
+            const emoji = document.createElement('div');
+            emoji.className = 'emoji';
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            emoji.style.left = Math.random() * 100 + 'vw';
+            emoji.style.bottom = '-30px';
+            
+            const duration = 5 + Math.random() * 10;
+            emoji.style.animationDuration = duration + 's';
+            
+            const size = 16 + Math.random() * 32;
+            emoji.style.fontSize = size + 'px';
+            
+            emoji.style.opacity = 0.5 + Math.random() * 0.5;
+            
+            container.appendChild(emoji);
+            
+            setTimeout(() => {
+                emoji.remove();
+            }, duration * 1000);
+        }
+        
+        setInterval(createEmoji, 300);
+        
+        for (let i = 0; i < 20; i++) {
+            setTimeout(createEmoji, Math.random() * 2000);
+        }
+        
+        // Обработчики кнопок
+        document.querySelector('.contact-btn').addEventListener('click', function() {
+            alert('luckyboyfanat57@gmail.com почта');
+        });
+        
+        document.querySelector('.telegram-btn').addEventListener('click', function() {
+            
+            window.open('https://t.me/biotamdasika', '_blank');
+        });
+    </script>
+
+</body></html>
