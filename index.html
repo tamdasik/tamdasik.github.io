@@ -1,201 +1,129 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Капча с языками</title>
+  <meta charset="UTF-8" />
+  <title>Мой сайт с социальными ссылками</title>
   <style>
+    /* Сброс и базовые стили */
+    * {
+      box-sizing: border-box;
+    }
     body {
-      background: #121212;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
-    }
-
-    .captcha-box {
-      background: #1e1e1e;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      background: linear-gradient(135deg, #1f1f2e, #121212);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
-      width: 340px;
-      color: #fff;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      padding: 20px;
     }
-
-    .captcha-box.shake {
-      animation: shake 0.3s;
-    }
-
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-8px); }
-      50% { transform: translateX(8px); }
-      75% { transform: translateX(-6px); }
-      100% { transform: translateX(0); }
-    }
-
-    .captcha-box.success {
-      animation: successGlow 0.6s ease-out forwards;
-    }
-
-    @keyframes successGlow {
-      0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 rgba(0,255,100,0);
-      }
-      50% {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px rgba(0,255,100,0.5);
-      }
-      100% {
-        transform: scale(1);
-        box-shadow: 0 0 12px rgba(0,255,100,0.3);
-      }
-    }
-
-    .captcha-box h2 {
-      margin-bottom: 20px;
-    }
-
-    .captcha-box label {
-      display: block;
+    h1 {
+      font-weight: 700;
+      font-size: 2.8rem;
       margin-bottom: 10px;
-      font-size: 16px;
-      color: #ccc;
+      color: #4a90e2;
+      text-shadow: 0 0 10px #4a90e2aa;
+    }
+    p {
+      font-size: 1.1rem;
+      color: #bbb;
+      margin-bottom: 40px;
     }
 
-    .captcha-box input[type="text"] {
-      padding: 10px;
+    /* Контейнер для кнопок */
+    .buttons {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 400px;
       width: 100%;
-      border: 1px solid #444;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      background-color: #2a2a2a;
-      color: #fff;
-      font-size: 16px;
     }
 
-    .captcha-box input[type="submit"] {
+    /* Стили для кнопок */
+    a.button {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      background: #2a2a3d;
+      color: #eee;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+      user-select: none;
+      cursor: pointer;
+      flex: 1 1 120px;
+      justify-content: center;
+    }
+    a.button:hover {
       background: #4a90e2;
+      box-shadow: 0 6px 25px #4a90e2cc;
+      transform: translateY(-4px);
       color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s;
+    }
+    a.button:active {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px #4a90e2aa;
     }
 
-    .captcha-box input[type="submit"]:hover {
-      background: #357abd;
+    /* Иконки SVG */
+    svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
     }
 
-    .message {
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    .lang-switch {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-
-    .lang-switch button {
-      background: #333;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      margin-left: 5px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .lang-switch button.active {
-      background: #4a90e2;
+    /* Адаптив */
+    @media (max-width: 400px) {
+      .buttons {
+        flex-direction: column;
+        gap: 20px;
+      }
+      a.button {
+        flex: none;
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="lang-switch">
-    <button id="lang-ru" class="active" onclick="switchLang('ru')">🇷🇺 Рус</button>
-    <button id="lang-en" onclick="switchLang('en')">🇬🇧 Eng</button>
+
+  <h1>Добро пожаловать!</h1>
+  <p>Свяжитесь со мной в социальных сетях</p>
+
+  <div class="buttons">
+    <!-- YouTube -->
+    <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="button" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19.615 3.184A3.006 3.006 0 0017.36 2.75C15.218 2.5 12 2.5 12 2.5s-3.218 0-5.36.25a3.006 3.006 0 00-2.256.434 3.012 3.012 0 00-1.482 1.725C3.25 6.014 3.25 9.5 3.25 9.5s0 3.486.652 5.091a3.012 3.012 0 001.482 1.725 3.006 3.006 0 002.256.434c2.142.25 5.36.25 5.36.25s3.218 0 5.36-.25a3.006 3.006 0 002.256-.434 3.012 3.012 0 001.482-1.725c.652-1.605.652-5.091.652-5.091s0-3.486-.652-5.091a3.012 3.012 0 00-1.482-1.725zM10 14.5v-5l4.5 2.5-4.5 2.5z"/>
+      </svg>
+      YouTube
+    </a>
+
+    <!-- Discord -->
+    <a href="https://discord.com/" target="_blank" rel="noopener" class="button" aria-label="Discord">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561 19.9 19.9 0 006.0537 3.0584.0777.0777 0 00.0842-.0276c.4666-.6398.8731-1.3162 1.203-2.0174a.076.076 0 00-.0416-.1057 13.1274 13.1274 0 01-1.872-.8884.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0786-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0814.0095c.119.099.246.1981.3727.2924a.0766.0766 0 01-.0065.1276 12.769 12.769 0 01-1.873.8873.0766.0766 0 00-.0407.1062c.3334.7009.739 1.3777 1.205 2.0174a.076.076 0 00.0842.0286 19.876 19.876 0 006.054-3.058.082.082 0 00.0307-.0559c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1531-1.0857-2.1531-2.419 0-1.3332.9555-2.4189 2.1531-2.4189 1.2108 0 2.1747 1.0952 2.153 2.4189 0 1.3333-.9555 2.419-2.153 2.419zm7.9748 0c-1.1824 0-2.1531-1.0857-2.1531-2.419 0-1.3332.9554-2.4189 2.1531-2.4189 1.2107 0 2.1746 1.0952 2.153 2.4189 0 1.3333-.9423 2.419-2.153 2.419z"/>
+      </svg>
+      Discord
+    </a>
+
+    <!-- Telegram -->
+    <a href="https://telegram.org/" target="_blank" rel="noopener" class="button" aria-label="Telegram">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21.228 2.673a1.276 1.276 0 00-1.342-.22L3.863 9.25a1.3 1.3 0 00-.548.382c-.01.01-.02.022-.03.034a1.292 1.292 0 00-.222 1.542 1.306 1.306 0 00.955.602l3.356.422 1.597 4.717c.12.352.575.506.87.29l2.77-2.18 4.56 3.362a1.305 1.305 0 001.92-1.135l2.225-16.38a1.288 1.288 0 00-.77-1.74zM9.7 14.137l-.01.005-1.08-3.196 8.012-6.73-6.932 9.92z"/>
+      </svg>
+      Telegram
+    </a>
   </div>
 
-  <div class="captcha-box" id="captchaBox">
-    <h2 id="title">Подтвердите, что вы не бот</h2>
-    <form onsubmit="return checkCaptcha()">
-      <label id="question">Сколько будет 5 + 2?</label>
-      <input type="text" id="captcha" placeholder="Введите ответ">
-      <input type="submit" id="submitBtn" value="Проверить">
-      <div class="message" id="message"></div>
-    </form>
-  </div>
-
-  <!-- Звуки -->
-  <audio id="successSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_b7b4c6543d.mp3"></audio>
-  <audio id="errorSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_fceaa1c2b6.mp3"></audio>
-
-  <script>
-    let currentLang = 'ru';
-    const langs = {
-      ru: {
-        title: 'Подтвердите, что вы не бот',
-        question: 'Сколько будет 5 + 2?',
-        placeholder: 'Введите ответ',
-        submit: 'Проверить',
-        success: '✅ Капча успешно пройдена!',
-        fail: '❌ Неверный ответ. Попробуйте снова.'
-      },
-      en: {
-        title: 'Please confirm you are not a bot',
-        question: 'What is 5 + 2?',
-        placeholder: 'Enter your answer',
-        submit: 'Check',
-        success: '✅ Captcha passed!',
-        fail: '❌ Incorrect answer. Try again.'
-      }
-    };
-
-    function switchLang(lang) {
-      currentLang = lang;
-
-      document.getElementById('title').innerText = langs[lang].title;
-      document.getElementById('question').innerText = langs[lang].question;
-      document.getElementById('captcha').placeholder = langs[lang].placeholder;
-      document.getElementById('submitBtn').value = langs[lang].submit;
-
-      document.getElementById('lang-ru').classList.toggle('active', lang === 'ru');
-      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-    }
-
-    function checkCaptcha() {
-      const answer = document.getElementById('captcha').value.trim();
-      const message = document.getElementById('message');
-      const box = document.getElementById('captchaBox');
-      const successSound = document.getElementById('successSound');
-      const errorSound = document.getElementById('errorSound');
-
-      box.classList.remove('shake', 'success');
-
-      if (answer === '7') {
-        message.style.color = '#00c853';
-        message.textContent = langs[currentLang].success;
-        successSound.play();
-        box.classList.add('success');
-      } else {
-        message.style.color = '#ff5252';
-        message.textContent = langs[currentLang].fail;
-        errorSound.play();
-        box.classList.add('shake');
-        setTimeout(() => box.classList.remove('shake'), 300);
-      }
-
-      return false;
-    }
-  </script>
 </body>
 </html>
