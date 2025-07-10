@@ -1,3 +1,23 @@
+<form onsubmit="return checkCaptcha()">
+  <label>Сколько будет 3 + 4?</label><br>
+  <input type="text" id="captcha"><br><br>
+  <input type="submit" value="Проверить">
+</form>
+
+<script>
+function checkCaptcha() {
+  const answer = document.getElementById('captcha').value;
+  if (answer == '7') {
+    alert('Капча пройдена!');
+    return true;
+  } else {
+    alert('Неверный ответ.');
+    return false;
+  }
+}
+</script>
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
