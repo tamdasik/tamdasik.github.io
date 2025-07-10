@@ -14,3 +14,16 @@
   </form>
 </body>
 </html>
+<?php
+$secret = '6LcerX4rAAAAAMP_B8wDxZIwjKtVrQ7dfqUyXHXl';
+$response = $_POST['g-recaptcha-response'];
+
+$verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$response}");
+$captcha_success = json_decode($verify);
+
+if ($captcha_success->success) {
+    echo "Капча пройдена!";
+} else {
+    echo "Капча не пройдена.";
+}
+?>
