@@ -1,29 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <title>CAPTCHA Example</title>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <meta charset="UTF-8">
+  <title>Проверка капчи</title>
+  <style>
+    body {
+      background: #f0f4f8;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .captcha-box {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    .captcha-box h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .captcha-box label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .captcha-box input[type="text"] {
+      padding: 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .captcha-box input[type="submit"] {
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .captcha-box input[type="submit"]:hover {
+      background: #0056b3;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
 </head>
 <body>
-  <h2>Пожалуйста, пройдите капчу</h2>
+  <div class="captcha-box">
+    <h2>Проверка</h2>
+    <form onsubmit="return checkCaptcha()">
+      <label>Сколько будет 3 + 4?</label>
+      <input type="text" id="captcha" placeholder="Введите ответ">
+      <input type="submit" value="Проверить">
+      <div class="message" id="message"></div>
+    </form>
+  </div>
 
-  <form action="verify.php" method="POST">
-    <div class="g-recaptcha" data-sitekey="6LcerX4rAAAAAGBxBz0Cslzh-6P7krRZTxlwuWID"></div>
-    <br/>
-    <input type="submit" value="Отправить">
-  </form>
+  <script>
+    function checkCaptcha() {
+      const answer = document.getElementById('captcha').value.trim();
+      const message = document.getElementById('message');
+      if (answer === '7') {
+        message.style.color = 'green';
+        message.textContent = '✅ Капча пройдена!';
+      } else {
+        message.style.color = 'red';
+        message.textContent = '❌ Неверный ответ.';
+      }
+      return false; // чтобы форма не отправлялась
+    }
+  </script>
 </body>
 </html>
-<?php
-$secret = '6LcerX4rAAAAAMP_B8wDxZIwjKtVrQ7dfqUyXHXl';
-$response = $_POST['g-recaptcha-response'];
-
-$verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$response}");
-$captcha_success = json_decode($verify);
-
-if ($captcha_success->success) {
-    echo "Капча пройдена!";
-} else {
-    echo "Капча не пройдена.";
-}
-?>
