@@ -2,145 +2,195 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <title>Мой сайт</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Мой Геймерский Сайт</title>
   <style>
     :root {
-      --bg-dark: #0d0d0d;
-      --bg-light: #f0f0f0;
-      --text-dark: #ffffff;
-      --text-light: #000000;
+      --bg-dark: #0e0e0e;
+      --bg-light: #f4f4f4;
+      --text-dark: #fff;
+      --text-light: #000;
       --accent: #00ffcc;
     }
+
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg-dark);
+      background: var(--bg-dark);
       color: var(--text-dark);
-      transition: 0.4s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.3s ease;
     }
-    .container {
-      text-align: center;
-      padding: 3rem;
+
+    body.light {
+      background: var(--bg-light);
+      color: var(--text-light);
     }
+
     h1 {
-      font-size: 3rem;
-      animation: fadeIn 1s ease-in;
+      margin-top: 40px;
+      font-size: 2.5em;
+      text-shadow: 0 0 10px var(--accent);
     }
-    .buttons a {
-      display: inline-block;
+
+    .lang-switcher, .theme-toggle, .music-toggle {
       margin: 10px;
-      padding: 15px 25px;
-      background: var(--accent);
-      color: black;
-      text-decoration: none;
-      border-radius: 15px;
-      font-weight: bold;
-      transition: transform 0.3s;
     }
+
+    select, button {
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: #000;
+      font-weight: bold;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .buttons a {
+      padding: 15px 30px;
+      background: var(--accent);
+      border-radius: 15px;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+
     .buttons a:hover {
       transform: scale(1.1);
     }
-    .lang-switcher, .theme-switcher, .audio-control {
+
+    .captcha {
       margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .hidden {
-      display: none;
+
+    input[type="text"] {
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid var(--accent);
+      margin-bottom: 10px;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      .buttons a {
+        padding: 12px 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <audio id="bg-music" autoplay loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
-  <div class="container">
-    <h1 id="title">Добро пожаловать!</h1>
-    <div class="buttons">
-      <a href="https://youtube.com" target="_blank">YouTube</a>
-      <a href="https://t.me" target="_blank">Telegram</a>
-      <a href="https://discord.com" target="_blank">Discord</a>
-    </div>
-    <div class="captcha">
-      <p id="captcha-text">Введите число: <span id="captcha-question"></span></p>
-      <input type="text" id="captcha-input">
-      <button onclick="checkCaptcha()">Проверить</button>
-      <p id="captcha-error" style="color: red;"></p>
-    </div>
-    <div class="lang-switcher">
-      <button onclick="setLang('ru')">Русский</button>
-      <button onclick="setLang('en')">English</button>
-      <button onclick="setLang('be')">Беларуская</button>
-    </div>
-    <div class="theme-switcher">
-      <button onclick="toggleTheme()">Сменить тему</button>
-    </div>
-    <div class="audio-control">
-      <button onclick="toggleMusic()">Вкл/Выкл музыку</button>
-    </div>
-  </div>
-  <script>
-    let isDark = true;
-    let musicPlaying = true;
-    const audio = document.getElementById('bg-music');
-    const captchaQuestion = document.getElementById('captcha-question');
-    const captchaInput = document.getElementById('captcha-input');
-    const captchaError = document.getElementById('captcha-error');
-    let correctAnswer = 0;
+  <h1 data-i18n="welcome">Добро пожаловать!</h1>
 
-    function generateCaptcha() {
-      const a = Math.floor(Math.random() * 10);
-      const b = Math.floor(Math.random() * 10);
-      correctAnswer = a + b;
-      captchaQuestion.textContent = `${a} + ${b}`;
+  <div class="lang-switcher">
+    <select id="lang">
+      <option value="ru">Русский</option>
+      <option value="en">English</option>
+      <option value="be">Беларуская</option>
+    </select>
+  </div>
+
+  <div class="theme-toggle">
+    <button onclick="toggleTheme()" data-i18n="theme">Сменить тему</button>
+  </div>
+
+  <div class="music-toggle">
+    <button onclick="toggleMusic()" data-i18n="music">Музыка: Вкл</button>
+  </div>
+
+  <audio id="bg-music" src="https://cdn.pixabay.com/audio/2023/03/02/audio_4ad2b24148.mp3" loop autoplay></audio>
+
+  <div class="buttons">
+    <a href="https://youtube.com" target="_blank">YouTube</a>
+    <a href="https://t.me" target="_blank">Telegram</a>
+    <a href="https://discord.com" target="_blank">Discord</a>
+  </div>
+
+  <div class="captcha">
+    <label data-i18n="captcha">Введите слово "игра":</label>
+    <input type="text" id="captcha-input">
+    <button onclick="checkCaptcha()" data-i18n="check">Проверить</button>
+  </div>
+
+  <audio id="error-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_35ba631b57.mp3"></audio>
+
+  <script>
+    const i18n = {
+      ru: {
+        welcome: "Добро пожаловать!",
+        theme: "Сменить тему",
+        music: "Музыка: Вкл",
+        captcha: 'Введите слово "игра":',
+        check: "Проверить"
+      },
+      en: {
+        welcome: "Welcome!",
+        theme: "Toggle Theme",
+        music: "Music: On",
+        captcha: 'Enter the word "game":',
+        check: "Check"
+      },
+      be: {
+        welcome: "Сардэчна запрашаем!",
+        theme: "Змяніць тэму",
+        music: "Музыка: Укл",
+        captcha: 'Увядзіце слова "гульня":',
+        check: "Праверыць"
+      }
+    };
+
+    document.getElementById('lang').addEventListener('change', function () {
+      const lang = this.value;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        el.textContent = i18n[lang][key];
+      });
+    });
+
+    function toggleTheme() {
+      document.body.classList.toggle("light");
     }
 
     function checkCaptcha() {
-      const value = parseInt(captchaInput.value);
-      if (value === correctAnswer) {
-        captchaError.style.color = 'green';
-        captchaError.textContent = translations[currentLang].success;
+      const input = document.getElementById("captcha-input").value.toLowerCase();
+      const lang = document.getElementById("lang").value;
+      const correct = { ru: "игра", en: "game", be: "гульня" }[lang];
+      if (input !== correct) {
+        document.getElementById("error-sound").play();
+        alert("Ошибка! Попробуйте снова.");
       } else {
-        captchaError.style.color = 'red';
-        captchaError.textContent = translations[currentLang].fail;
-        new Audio('error.mp3').play();
+        alert("Успешно!");
       }
-      generateCaptcha();
     }
 
-    const translations = {
-      ru: { title: 'Добро пожаловать!', success: 'Правильно!', fail: 'Неправильно!' },
-      en: { title: 'Welcome!', success: 'Correct!', fail: 'Wrong!' },
-      be: { title: 'Сардэчна запрашаем!', success: 'Правільна!', fail: 'Няправільна!' }
-    };
-
-    let currentLang = 'ru';
-
-    function setLang(lang) {
-      currentLang = lang;
-      document.getElementById('title').textContent = translations[lang].title;
-    }
-
-    function toggleTheme() {
-      isDark = !isDark;
-      document.body.style.backgroundColor = isDark ? 'var(--bg-dark)' : 'var(--bg-light)';
-      document.body.style.color = isDark ? 'var(--text-dark)' : 'var(--text-light)';
-    }
-
+    let musicOn = true;
     function toggleMusic() {
-      if (musicPlaying) {
+      const audio = document.getElementById("bg-music");
+      const btn = document.querySelector(".music-toggle button");
+      if (musicOn) {
         audio.pause();
+        btn.textContent = "Музыка: Выкл";
       } else {
         audio.play();
+        btn.textContent = "Музыка: Вкл";
       }
-      musicPlaying = !musicPlaying;
+      musicOn = !musicOn;
     }
-
-    generateCaptcha();
   </script>
 </body>
 </html>
