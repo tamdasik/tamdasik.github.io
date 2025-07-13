@@ -2,46 +2,145 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Мой сайт</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мой Геймерский Сайт</title>
   <style>
+    :root {
+      --bg-dark: #0d0d0d;
+      --bg-light: #f0f0f0;
+      --text-dark: #ffffff;
+      --text-light: #000000;
+      --accent: #00ffcc;
+    }
     body {
-      background: #121212;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+      transition: 0.4s ease-in-out;
+    }
+    .container {
+      text-align: center;
+      padding: 3rem;
     }
     h1 {
-      font-size: 3em;
-      margin-bottom: 20px;
+      font-size: 3rem;
+      animation: fadeIn 1s ease-in;
     }
-    .buttons {
-      display: flex;
-      gap: 20px;
-    }
-    a {
+    .buttons a {
+      display: inline-block;
+      margin: 10px;
       padding: 15px 25px;
-      background: #1e88e5;
-      color: white;
+      background: var(--accent);
+      color: black;
       text-decoration: none;
-      border-radius: 12px;
-      transition: 0.3s;
+      border-radius: 15px;
+      font-weight: bold;
+      transition: transform 0.3s;
     }
-    a:hover {
-      background: #1565c0;
+    .buttons a:hover {
+      transform: scale(1.1);
+    }
+    .lang-switcher, .theme-switcher, .audio-control {
+      margin-top: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <h1>Добро пожаловать!</h1>
-  <div class="buttons">
-    <a href="https://youtube.com" target="_blank">YouTube</a>
-    <a href="https://t.me" target="_blank">Telegram</a>
-    <a href="https://discord.com" target="_blank">Discord</a>
+  <audio id="bg-music" autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+  <div class="container">
+    <h1 id="title">Добро пожаловать!</h1>
+    <div class="buttons">
+      <a href="https://youtube.com" target="_blank">YouTube</a>
+      <a href="https://t.me" target="_blank">Telegram</a>
+      <a href="https://discord.com" target="_blank">Discord</a>
+    </div>
+    <div class="captcha">
+      <p id="captcha-text">Введите число: <span id="captcha-question"></span></p>
+      <input type="text" id="captcha-input">
+      <button onclick="checkCaptcha()">Проверить</button>
+      <p id="captcha-error" style="color: red;"></p>
+    </div>
+    <div class="lang-switcher">
+      <button onclick="setLang('ru')">Русский</button>
+      <button onclick="setLang('en')">English</button>
+      <button onclick="setLang('be')">Беларуская</button>
+    </div>
+    <div class="theme-switcher">
+      <button onclick="toggleTheme()">Сменить тему</button>
+    </div>
+    <div class="audio-control">
+      <button onclick="toggleMusic()">Вкл/Выкл музыку</button>
+    </div>
   </div>
+  <script>
+    let isDark = true;
+    let musicPlaying = true;
+    const audio = document.getElementById('bg-music');
+    const captchaQuestion = document.getElementById('captcha-question');
+    const captchaInput = document.getElementById('captcha-input');
+    const captchaError = document.getElementById('captcha-error');
+    let correctAnswer = 0;
+
+    function generateCaptcha() {
+      const a = Math.floor(Math.random() * 10);
+      const b = Math.floor(Math.random() * 10);
+      correctAnswer = a + b;
+      captchaQuestion.textContent = `${a} + ${b}`;
+    }
+
+    function checkCaptcha() {
+      const value = parseInt(captchaInput.value);
+      if (value === correctAnswer) {
+        captchaError.style.color = 'green';
+        captchaError.textContent = translations[currentLang].success;
+      } else {
+        captchaError.style.color = 'red';
+        captchaError.textContent = translations[currentLang].fail;
+        new Audio('error.mp3').play();
+      }
+      generateCaptcha();
+    }
+
+    const translations = {
+      ru: { title: 'Добро пожаловать!', success: 'Правильно!', fail: 'Неправильно!' },
+      en: { title: 'Welcome!', success: 'Correct!', fail: 'Wrong!' },
+      be: { title: 'Сардэчна запрашаем!', success: 'Правільна!', fail: 'Няправільна!' }
+    };
+
+    let currentLang = 'ru';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.getElementById('title').textContent = translations[lang].title;
+    }
+
+    function toggleTheme() {
+      isDark = !isDark;
+      document.body.style.backgroundColor = isDark ? 'var(--bg-dark)' : 'var(--bg-light)';
+      document.body.style.color = isDark ? 'var(--text-dark)' : 'var(--text-light)';
+    }
+
+    function toggleMusic() {
+      if (musicPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      musicPlaying = !musicPlaying;
+    }
+
+    generateCaptcha();
+  </script>
 </body>
 </html>
