@@ -3,43 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multilingual Social Site</title>
+    <title>Elegant Translator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4285f4;
-            --secondary-color: #34a853;
-            --accent-color: #ea4335;
-            --text-color: #333;
-            --bg-color: #f9f9f9;
-            --card-bg: #fff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #f72585;
+            --text-color: #2b2d42;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
         }
 
         .dark-mode {
-            --primary-color: #8ab4f8;
-            --secondary-color: #81c995;
-            --accent-color: #f28b82;
-            --text-color: #e8eaed;
-            --bg-color: #202124;
-            --card-bg: #303134;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --primary-color: #4895ef;
+            --secondary-color: #560bad;
+            --accent-color: #f72585;
+            --text-color: #f8f9fa;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
             color: var(--text-color);
             transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            flex: 1;
         }
 
         header {
@@ -47,17 +51,20 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .dark-mode header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 700;
             color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent-color);
         }
 
         .controls {
@@ -66,179 +73,338 @@
             align-items: center;
         }
 
-        .theme-toggle, .language-toggle {
+        .theme-toggle {
             cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             background-color: var(--card-bg);
             box-shadow: var(--shadow);
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
             transition: var(--transition);
         }
 
-        .theme-toggle:hover, .language-toggle:hover {
-            transform: translateY(-2px);
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            color: var(--accent-color);
         }
 
-        .main-content {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-
-        p {
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .social-link {
+        .translator-container {
             display: flex;
             flex-direction: column;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .language-selectors {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            text-decoration: none;
+            gap: 20px;
+        }
+
+        .select-container {
+            flex: 1;
+            position: relative;
+        }
+
+        select {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: none;
+            background-color: var(--card-bg);
             color: var(--text-color);
+            font-size: 16px;
+            appearance: none;
+            box-shadow: var(--shadow);
+            cursor: pointer;
             transition: var(--transition);
         }
 
-        .social-icon {
-            width: 70px;
-            height: 70px;
+        select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+
+        .select-container::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .swap-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            margin-bottom: 10px;
+            cursor: pointer;
             box-shadow: var(--shadow);
             transition: var(--transition);
         }
 
-        .social-link:hover .social-icon {
+        .swap-btn:hover {
+            background-color: var(--secondary-color);
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        .text-areas {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .text-areas {
+                flex-direction: column;
+            }
+        }
+
+        .text-box {
+            flex: 1;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .text-box:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .telegram {
-            background-color: #0088cc;
-            color: white;
+        .dark-mode .text-box:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .discord {
-            background-color: #5865F2;
+        .text-box-header {
+            padding: 15px 20px;
+            background-color: var(--primary-color);
             color: white;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
         }
 
-        .youtube {
-            background-color: #FF0000;
+        .text-box-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
             color: white;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 20px;
+            border: none;
+            resize: none;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        textarea:focus {
+            outline: none;
+        }
+
+        .translate-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .translate-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(247, 37, 133, 0.3);
+            transition: var(--transition);
+        }
+
+        .translate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(247, 37, 133, 0.4);
+        }
+
+        .translate-btn:active {
+            transform: translateY(1px);
         }
 
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             margin-top: 60px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
         }
 
         .dark-mode footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        @media (max-width: 768px) {
-            .social-links {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            header {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .controls {
-                width: 100%;
-                justify-content: center;
-            }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .translator-container {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .text-box {
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .translate-btn {
+            animation: fadeIn 0.6s ease-out 0.4s both;
+        }
+
+        /* Pulse animation for loading */
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 0.6; transform: scale(0.98); }
+        }
+
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo" data-lang="en">Social Links</div>
-            <div class="logo" data-lang="ru">Социальные сети</div>
-            <div class="logo" data-lang="by">Сацыяльныя сеткі</div>
-            
+            <div class="logo">
+                <i class="fas fa-language"></i>
+                <span>Elegant Translator</span>
+            </div>
             <div class="controls">
                 <div class="theme-toggle" onclick="toggleTheme()">
                     <i class="fas fa-moon"></i>
-                    <span data-lang="en">Dark Mode</span>
-                    <span data-lang="ru">Тёмная тема</span>
-                    <span data-lang="by">Цёмная тэма</span>
-                </div>
-                
-                <div class="language-toggle">
-                    <select id="language-selector" onchange="changeLanguage()">
-                        <option value="en">English</option>
-                        <option value="ru">Русский</option>
-                        <option value="by">Беларуская</option>
-                    </select>
                 </div>
             </div>
         </header>
-        
-        <main class="main-content">
-            <h1 data-lang="en">Connect With Us</h1>
-            <h1 data-lang="ru">Свяжитесь с нами</h1>
-            <h1 data-lang="by">Звяжыцеся з намі</h1>
-            
-            <p data-lang="en">Follow us on social media to stay updated with our latest news, updates and content. Join our community today!</p>
-            <p data-lang="ru">Подпишитесь на нас в социальных сетях, чтобы быть в курсе последних новостей, обновлений и контента. Присоединяйтесь к нашему сообществу сегодня!</p>
-            <p data-lang="by">Падпішыцеся на нас у сацыяльных сетках, каб быць у курсе апошніх навін, абнаўленняў і кантэнту. Далучайцеся да нашай супольнасці сёння!</p>
-            
-            <div class="social-links">
-                <a href="https://t.me/" class="social-link" target="_blank">
-                    <div class="social-icon telegram">
-                        <i class="fab fa-telegram"></i>
+
+        <main class="translator-container">
+            <div class="language-selectors">
+                <div class="select-container">
+                    <select id="source-language">
+                        <option value="en">English</option>
+                        <option value="ru">Russian</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="zh">Chinese</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ar">Arabic</option>
+                    </select>
+                </div>
+
+                <button class="swap-btn" onclick="swapLanguages()">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+
+                <div class="select-container">
+                    <select id="target-language">
+                        <option value="ru">Russian</option>
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="zh">Chinese</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ar">Arabic</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="text-areas">
+                <div class="text-box">
+                    <div class="text-box-header">
+                        <span id="source-language-label">English</span>
+                        <div class="text-box-actions">
+                            <button class="action-btn" onclick="clearText('source')" title="Clear">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            <button class="action-btn" onclick="speakText('source')" title="Listen">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <button class="action-btn" onclick="copyText('source')" title="Copy">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
                     </div>
-                    <span>Telegram</span>
-                </a>
-                
-                <a href="https://discord.gg/" class="social-link" target="_blank">
-                    <div class="social-icon discord">
-                        <i class="fab fa-discord"></i>
+                    <textarea id="source-text" placeholder="Enter text to translate..." autofocus></textarea>
+                </div>
+
+                <div class="text-box">
+                    <div class="text-box-header">
+                        <span id="target-language-label">Russian</span>
+                        <div class="text-box-actions">
+                            <button class="action-btn" onclick="clearText('target')" title="Clear">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            <button class="action-btn" onclick="speakText('target')" title="Listen">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <button class="action-btn" onclick="copyText('target')" title="Copy">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
                     </div>
-                    <span>Discord</span>
-                </a>
-                
-                <a href="https://youtube.com/" class="social-link" target="_blank">
-                    <div class="social-icon youtube">
-                        <i class="fab fa-youtube"></i>
-                    </div>
-                    <span>YouTube</span>
-                </a>
+                    <textarea id="target-text" placeholder="Translation will appear here..." readonly></textarea>
+                </div>
+            </div>
+
+            <div class="translate-btn-container">
+                <button class="translate-btn" onclick="translateText()">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Translate</span>
+                </button>
             </div>
         </main>
-        
+
         <footer>
-            <p data-lang="en">&copy; 2023 Social Links. All rights reserved.</p>
-            <p data-lang="ru">&copy; 2023 Социальные сети. Все права защищены.</p>
-            <p data-lang="by">&copy; 2023 Сацыяльныя сеткі. Усе правы абаронены.</p>
+            <p>&copy; 2023 Elegant Translator. All rights reserved.</p>
         </footer>
     </div>
 
@@ -262,38 +428,164 @@
             document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
         }
 
-        // Language switch functionality
-        function changeLanguage() {
-            const lang = document.getElementById('language-selector').value;
-            localStorage.setItem('language', lang);
-            updateLanguage(lang);
+        // Language selection change handlers
+        document.getElementById('source-language').addEventListener('change', function() {
+            document.getElementById('source-language-label').textContent = 
+                this.options[this.selectedIndex].text;
+        });
+
+        document.getElementById('target-language').addEventListener('change', function() {
+            document.getElementById('target-language-label').textContent = 
+                this.options[this.selectedIndex].text;
+        });
+
+        // Swap languages
+        function swapLanguages() {
+            const sourceSelect = document.getElementById('source-language');
+            const targetSelect = document.getElementById('target-language');
+            
+            const temp = sourceSelect.value;
+            sourceSelect.value = targetSelect.value;
+            targetSelect.value = temp;
+            
+            // Update labels
+            document.getElementById('source-language-label').textContent = 
+                sourceSelect.options[sourceSelect.selectedIndex].text;
+            document.getElementById('target-language-label').textContent = 
+                targetSelect.options[targetSelect.selectedIndex].text;
+            
+            // Also swap text if there's any
+            const sourceText = document.getElementById('source-text');
+            const targetText = document.getElementById('target-text');
+            const tempText = sourceText.value;
+            sourceText.value = targetText.value;
+            targetText.value = tempText;
         }
 
-        function updateLanguage(lang) {
-            // Hide all language elements
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                el.style.display = 'none';
-            });
-            
-            // Show elements for selected language
-            document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
-                el.style.display = 'block';
-            });
-            
-            // Special cases for elements that aren't simple show/hide
-            if (lang === 'en') {
-                document.querySelector('.theme-toggle span').innerText = document.querySelector('.theme-toggle span[data-lang="en"]').innerText;
-            } else if (lang === 'ru') {
-                document.querySelector('.theme-toggle span').innerText = document.querySelector('.theme-toggle span[data-lang="ru"]').innerText;
-            } else if (lang === 'by') {
-                document.querySelector('.theme-toggle span').innerText = document.querySelector('.theme-toggle span[data-lang="by"]').innerText;
+        // Clear text
+        function clearText(type) {
+            if (type === 'source') {
+                document.getElementById('source-text').value = '';
+            } else {
+                document.getElementById('target-text').value = '';
             }
         }
 
-        // Check for saved language preference
-        const savedLang = localStorage.getItem('language') || 'en';
-        document.getElementById('language-selector').value = savedLang;
-        updateLanguage(savedLang);
+        // Copy text
+        function copyText(type) {
+            const textarea = type === 'source' ? 
+                document.getElementById('source-text') : 
+                document.getElementById('target-text');
+            
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Show temporary feedback
+            const button = event.currentTarget;
+            const originalIcon = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            setTimeout(() => {
+                button.innerHTML = originalIcon;
+            }, 1000);
+        }
+
+        // Speak text
+        function speakText(type) {
+            const text = type === 'source' ? 
+                document.getElementById('source-text').value : 
+                document.getElementById('target-text').value;
+            
+            if (text.trim() === '') return;
+            
+            const language = type === 'source' ?
+                document.getElementById('source-language').value :
+                document.getElementById('target-language').value;
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = language;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Translate text (mock implementation)
+        function translateText() {
+            const sourceText = document.getElementById('source-text').value;
+            if (sourceText.trim() === '') return;
+            
+            const sourceLang = document.getElementById('source-language').value;
+            const targetLang = document.getElementById('target-language').value;
+            
+            const targetText = document.getElementById('target-text');
+            const translateBtn = document.querySelector('.translate-btn');
+            
+            // Show loading state
+            translateBtn.classList.add('loading');
+            targetText.value = '';
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                // This is a mock translation - in a real app you would call a translation API
+                let translatedText = `[Translated from ${sourceLang} to ${targetLang}]: ${sourceText}`;
+                
+                if (sourceLang === 'en' && targetLang === 'ru') {
+                    translatedText = mockTranslateENtoRU(sourceText);
+                } else if (sourceLang === 'ru' && targetLang === 'en') {
+                    translatedText = mockTranslateRUtoEN(sourceText);
+                }
+                
+                targetText.value = translatedText;
+                translateBtn.classList.remove('loading');
+            }, 800);
+        }
+
+        // Mock translation functions
+        function mockTranslateENtoRU(text) {
+            const mockTranslations = {
+                "hello": "привет",
+                "world": "мир",
+                "translate": "переводить",
+                "text": "текст",
+                "good": "хороший",
+                "morning": "утро",
+                "how are you": "как дела",
+                "thank you": "спасибо",
+                "please": "пожалуйста",
+                "language": "язык"
+            };
+            
+            return text.split(' ').map(word => {
+                const lowerWord = word.toLowerCase();
+                return mockTranslations[lowerWord] || `[${word}]`;
+            }).join(' ');
+        }
+
+        function mockTranslateRUtoEN(text) {
+            const mockTranslations = {
+                "привет": "hello",
+                "мир": "world",
+                "переводить": "translate",
+                "текст": "text",
+                "хороший": "good",
+                "утро": "morning",
+                "как дела": "how are you",
+                "спасибо": "thank you",
+                "пожалуйста": "please",
+                "язык": "language"
+            };
+            
+            return text.split(' ').map(word => {
+                const lowerWord = word.toLowerCase();
+                return mockTranslations[lowerWord] || `[${word}]`;
+            }).join(' ');
+        }
+
+        // Auto-translate when typing stops (debounce)
+        let typingTimer;
+        const doneTypingInterval = 1000;
+        
+        document.getElementById('source-text').addEventListener('input', function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(translateText, doneTypingInterval);
+        });
     </script>
 </body>
 </html>
