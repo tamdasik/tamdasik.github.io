@@ -1,590 +1,277 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegant Translator</title>
+    <title>Modern Website</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #4361ee;
-            --secondary-color: #3f37c9;
-            --accent-color: #f72585;
             --text-color: #2b2d42;
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
+            --bg-color: #ffffff;
+            --card-bg: #f8f9fa;
+            --border-color: #e9ecef;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
         }
 
         .dark-mode {
             --primary-color: #4895ef;
-            --secondary-color: #560bad;
-            --accent-color: #f72585;
             --text-color: #f8f9fa;
             --bg-color: #121212;
             --card-bg: #1e1e1e;
+            --border-color: #2e2e2e;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            transition: var(--transition);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo i {
-            color: var(--accent-color);
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .theme-toggle {
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--card-bg);
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1);
-            color: var(--accent-color);
-        }
-
-        .translator-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .language-selectors {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .select-container {
-            flex: 1;
-            position: relative;
-        }
-
-        select {
-            width: 100%;
-            padding: 15px 20px;
-            border-radius: 12px;
-            border: none;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            font-size: 16px;
-            appearance: none;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        select:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--primary-color);
-        }
-
-        .select-container::after {
-            content: '\f078';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: var(--text-color);
-            opacity: 0.7;
-        }
-
-        .swap-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .swap-btn:hover {
-            background-color: var(--secondary-color);
-            transform: rotate(180deg) scale(1.1);
-        }
-
-        .text-areas {
-            display: flex;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .text-areas {
-                flex-direction: column;
-            }
-        }
-
-        .text-box {
-            flex: 1;
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .text-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .dark-mode .text-box:hover {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .text-box-header {
-            padding: 15px 20px;
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .text-box-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .action-btn {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            opacity: 0.8;
-            transition: var(--transition);
-        }
-
-        .action-btn:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        textarea {
-            width: 100%;
-            height: 200px;
-            padding: 20px;
-            border: none;
-            resize: none;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            font-size: 16px;
-            transition: var(--transition);
-        }
-
-        textarea:focus {
-            outline: none;
-        }
-
-        .translate-btn-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .translate-btn {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(247, 37, 133, 0.3);
-            transition: var(--transition);
-        }
-
-        .translate-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(247, 37, 133, 0.4);
-        }
-
-        .translate-btn:active {
-            transform: translateY(1px);
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            margin-top: 60px;
-            background-color: var(--card-bg);
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .dark-mode footer {
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .translator-container {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        .text-box {
-            animation: fadeIn 0.6s ease-out 0.2s both;
-        }
-
-        .translate-btn {
-            animation: fadeIn 0.6s ease-out 0.4s both;
-        }
-
-        /* Pulse animation for loading */
-        @keyframes pulse {
-            0% { opacity: 0.6; transform: scale(0.98); }
-            50% { opacity: 1; transform: scale(1.02); }
-            100% { opacity: 0.6; transform: scale(0.98); }
-        }
-
-        .loading {
-            animation: pulse 1.5s ease-in-out infinite;
-        }
+        /* Остальные стили будут ниже */
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-language"></i>
-                <span>Elegant Translator</span>
-            </div>
-            <div class="controls">
-                <div class="theme-toggle" onclick="toggleTheme()">
-                    <i class="fas fa-moon"></i>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Logo</a>
+                <div class="nav-links">
+                    <a href="#home">Главная</a>
+                    <a href="#features">Возможности</a>
+                    <a href="#about">О нас</a>
+                    <a href="#contact">Контакты</a>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
                 </div>
-            </div>
-        </header>
-
-        <main class="translator-container">
-            <div class="language-selectors">
-                <div class="select-container">
-                    <select id="source-language">
-                        <option value="en">English</option>
-                        <option value="ru">Russian</option>
-                        <option value="es">Spanish</option>
-                        <option value="fr">French</option>
-                        <option value="de">German</option>
-                        <option value="zh">Chinese</option>
-                        <option value="ja">Japanese</option>
-                        <option value="ar">Arabic</option>
-                    </select>
-                </div>
-
-                <button class="swap-btn" onclick="swapLanguages()">
-                    <i class="fas fa-exchange-alt"></i>
+                <button class="hamburger">
+                    <i class="fas fa-bars"></i>
                 </button>
+            </nav>
+        </div>
+    </header>
 
-                <div class="select-container">
-                    <select id="target-language">
-                        <option value="ru">Russian</option>
-                        <option value="en">English</option>
-                        <option value="es">Spanish</option>
-                        <option value="fr">French</option>
-                        <option value="de">German</option>
-                        <option value="zh">Chinese</option>
-                        <option value="ja">Japanese</option>
-                        <option value="ar">Arabic</option>
-                    </select>
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="animate-fade-in">Создаём впечатляющие цифровые продукты</h1>
+                    <p class="animate-fade-in delay-1">Инновационные решения для вашего бизнеса с использованием передовых технологий</p>
+                    <div class="hero-buttons animate-fade-in delay-2">
+                        <a href="#contact" class="btn btn-primary">Начать проект</a>
+                        <a href="#features" class="btn btn-outline">Узнать больше</a>
+                    </div>
+                </div>
+                <div class="hero-image animate-slide-up">
+                    <img src="https://via.placeholder.com/600x400" alt="Hero Image">
                 </div>
             </div>
+        </section>
 
-            <div class="text-areas">
-                <div class="text-box">
-                    <div class="text-box-header">
-                        <span id="source-language-label">English</span>
-                        <div class="text-box-actions">
-                            <button class="action-btn" onclick="clearText('source')" title="Clear">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                            <button class="action-btn" onclick="speakText('source')" title="Listen">
-                                <i class="fas fa-volume-up"></i>
-                            </button>
-                            <button class="action-btn" onclick="copyText('source')" title="Copy">
-                                <i class="fas fa-copy"></i>
-                            </button>
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Наши возможности</h2>
+                <p class="section-subtitle">Мы предлагаем комплексные решения для вашего бизнеса</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card animate-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Быстрый запуск</h3>
+                        <p>Оптимизированные процессы для быстрого старта вашего проекта</p>
+                    </div>
+                    
+                    <div class="feature-card animate-card delay-1">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Адаптивный дизайн</h3>
+                        <p>Идеальное отображение на всех устройствах и экранах</p>
+                    </div>
+                    
+                    <div class="feature-card animate-card delay-2">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Аналитика</h3>
+                        <p>Подробные отчеты и аналитика для принятия верных решений</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <h2 class="section-title">О нашей компании</h2>
+                    <p>Мы - команда профессионалов, посвятивших себя созданию инновационных цифровых решений. Наш опыт и экспертиза позволяют нам реализовывать проекты любой сложности.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://via.placeholder.com/500x400" alt="About Us">
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Свяжитесь с нами</h2>
+                <div class="contact-wrapper">
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Ваш email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Ваше сообщение" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                    <div class="contact-info">
+                        <h3>Контактная информация</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> г. Москва, ул. Примерная, 123</p>
+                        <p><i class="fas fa-phone"></i> +7 (123) 456-78-90</p>
+                        <p><i class="fas fa-envelope"></i> info@example.com</p>
+                        <div class="contact-social">
+                            <p>Мы в соцсетях:</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-vk"></i></a>
+                                <a href="#"><i class="fab fa-telegram"></i></a>
+                                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                            </div>
                         </div>
                     </div>
-                    <textarea id="source-text" placeholder="Enter text to translate..." autofocus></textarea>
                 </div>
+            </div>
+        </section>
+    </main>
 
-                <div class="text-box">
-                    <div class="text-box-header">
-                        <span id="target-language-label">Russian</span>
-                        <div class="text-box-actions">
-                            <button class="action-btn" onclick="clearText('target')" title="Clear">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                            <button class="action-btn" onclick="speakText('target')" title="Listen">
-                                <i class="fas fa-volume-up"></i>
-                            </button>
-                            <button class="action-btn" onclick="copyText('target')" title="Copy">
-                                <i class="fas fa-copy"></i>
-                            </button>
-                        </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="#">Logo</a>
+                    <p>Инновационные решения для цифрового мира</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Ссылки</h4>
+                    <ul>
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#features">Возможности</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Социальные сети</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
                     </div>
-                    <textarea id="target-text" placeholder="Translation will appear here..." readonly></textarea>
                 </div>
             </div>
-
-            <div class="translate-btn-container">
-                <button class="translate-btn" onclick="translateText()">
-                    <i class="fas fa-exchange-alt"></i>
-                    <span>Translate</span>
-                </button>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Название компании. Все права защищены.</p>
             </div>
-        </main>
-
-        <footer>
-            <p>&copy; 2023 Elegant Translator. All rights reserved.</p>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <script>
-        // Theme toggle functionality
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.querySelector('.theme-toggle i');
-            if (document.body.classList.contains('dark-mode')) {
+        // JavaScript для функционала темы, анимаций и мобильного меню
+        document.addEventListener('DOMContentLoaded', function() {
+            // Переключение темы
+            const themeToggle = document.getElementById('theme-toggle');
+            const icon = themeToggle.querySelector('i');
+            
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
                 icon.classList.replace('fa-moon', 'fa-sun');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
-                localStorage.setItem('theme', 'light');
             }
-        }
-
-        // Check for saved theme preference
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-mode');
-            document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
-        }
-
-        // Language selection change handlers
-        document.getElementById('source-language').addEventListener('change', function() {
-            document.getElementById('source-language-label').textContent = 
-                this.options[this.selectedIndex].text;
-        });
-
-        document.getElementById('target-language').addEventListener('change', function() {
-            document.getElementById('target-language-label').textContent = 
-                this.options[this.selectedIndex].text;
-        });
-
-        // Swap languages
-        function swapLanguages() {
-            const sourceSelect = document.getElementById('source-language');
-            const targetSelect = document.getElementById('target-language');
             
-            const temp = sourceSelect.value;
-            sourceSelect.value = targetSelect.value;
-            targetSelect.value = temp;
-            
-            // Update labels
-            document.getElementById('source-language-label').textContent = 
-                sourceSelect.options[sourceSelect.selectedIndex].text;
-            document.getElementById('target-language-label').textContent = 
-                targetSelect.options[targetSelect.selectedIndex].text;
-            
-            // Also swap text if there's any
-            const sourceText = document.getElementById('source-text');
-            const targetText = document.getElementById('target-text');
-            const tempText = sourceText.value;
-            sourceText.value = targetText.value;
-            targetText.value = tempText;
-        }
-
-        // Clear text
-        function clearText(type) {
-            if (type === 'source') {
-                document.getElementById('source-text').value = '';
-            } else {
-                document.getElementById('target-text').value = '';
-            }
-        }
-
-        // Copy text
-        function copyText(type) {
-            const textarea = type === 'source' ? 
-                document.getElementById('source-text') : 
-                document.getElementById('target-text');
-            
-            textarea.select();
-            document.execCommand('copy');
-            
-            // Show temporary feedback
-            const button = event.currentTarget;
-            const originalIcon = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-check"></i>';
-            setTimeout(() => {
-                button.innerHTML = originalIcon;
-            }, 1000);
-        }
-
-        // Speak text
-        function speakText(type) {
-            const text = type === 'source' ? 
-                document.getElementById('source-text').value : 
-                document.getElementById('target-text').value;
-            
-            if (text.trim() === '') return;
-            
-            const language = type === 'source' ?
-                document.getElementById('source-language').value :
-                document.getElementById('target-language').value;
-            
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = language;
-            window.speechSynthesis.speak(utterance);
-        }
-
-        // Translate text (mock implementation)
-        function translateText() {
-            const sourceText = document.getElementById('source-text').value;
-            if (sourceText.trim() === '') return;
-            
-            const sourceLang = document.getElementById('source-language').value;
-            const targetLang = document.getElementById('target-language').value;
-            
-            const targetText = document.getElementById('target-text');
-            const translateBtn = document.querySelector('.translate-btn');
-            
-            // Show loading state
-            translateBtn.classList.add('loading');
-            targetText.value = '';
-            
-            // Simulate API call with timeout
-            setTimeout(() => {
-                // This is a mock translation - in a real app you would call a translation API
-                let translatedText = `[Translated from ${sourceLang} to ${targetLang}]: ${sourceText}`;
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
                 
-                if (sourceLang === 'en' && targetLang === 'ru') {
-                    translatedText = mockTranslateENtoRU(sourceText);
-                } else if (sourceLang === 'ru' && targetLang === 'en') {
-                    translatedText = mockTranslateRUtoEN(sourceText);
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.setItem('theme', 'light');
                 }
+            });
+            
+            // Мобильное меню
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+            
+            // Плавная прокрутка
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Закрываем мобильное меню после клика
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            hamburger.classList.remove('active');
+                        }
+                    }
+                });
+            });
+            
+            // Анимации при скролле
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.animate-card, .animate-fade-in, .animate-slide-up');
                 
-                targetText.value = translatedText;
-                translateBtn.classList.remove('loading');
-            }, 800);
-        }
-
-        // Mock translation functions
-        function mockTranslateENtoRU(text) {
-            const mockTranslations = {
-                "hello": "привет",
-                "world": "мир",
-                "translate": "переводить",
-                "text": "текст",
-                "good": "хороший",
-                "morning": "утро",
-                "how are you": "как дела",
-                "thank you": "спасибо",
-                "please": "пожалуйста",
-                "language": "язык"
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('animated');
+                    }
+                });
             };
             
-            return text.split(' ').map(word => {
-                const lowerWord = word.toLowerCase();
-                return mockTranslations[lowerWord] || `[${word}]`;
-            }).join(' ');
-        }
-
-        function mockTranslateRUtoEN(text) {
-            const mockTranslations = {
-                "привет": "hello",
-                "мир": "world",
-                "переводить": "translate",
-                "текст": "text",
-                "хороший": "good",
-                "утро": "morning",
-                "как дела": "how are you",
-                "спасибо": "thank you",
-                "пожалуйста": "please",
-                "язык": "language"
-            };
-            
-            return text.split(' ').map(word => {
-                const lowerWord = word.toLowerCase();
-                return mockTranslations[lowerWord] || `[${word}]`;
-            }).join(' ');
-        }
-
-        // Auto-translate when typing stops (debounce)
-        let typingTimer;
-        const doneTypingInterval = 1000;
-        
-        document.getElementById('source-text').addEventListener('input', function() {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(translateText, doneTypingInterval);
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Запускаем сразу для видимых элементов
         });
     </script>
 </body>
